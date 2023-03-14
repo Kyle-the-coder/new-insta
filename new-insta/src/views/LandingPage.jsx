@@ -3,6 +3,7 @@ import plus from "../assets/plus.png"
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
 import { useState, useEffect } from "react";
 import { storage } from "../config/firebase"
+import { Link } from "react-router-dom";
 
 const LandingPage = (props) => {
     const { loggedIn } = props
@@ -63,7 +64,8 @@ const LandingPage = (props) => {
         <div>
             <InstaNav loggedIn={loggedIn} />
             <div className="w-full h-[200px] flex items-center justify-evenly">
-                <h1 className="text-2xl text-white underline">Your Gallery:</h1>
+                <h1 className="text-2xl text-white underline"> Gallery:</h1>
+                <Link to="/yourimg">Your Image</Link>
                 <div className="w-content ">
                     <input type="file" className=" bg-slate-200 w-[200px]" onChange={(e) => setFileUpload(e.target.files[0])} />
                     <button className="bg-green-200 px-10 rounded border-2 border-green-700 py-2" onClick={uploadFile}>submit Img</button>
