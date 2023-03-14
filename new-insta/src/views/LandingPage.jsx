@@ -64,8 +64,8 @@ const LandingPage = (props) => {
         <div>
             <InstaNav loggedIn={loggedIn} />
             <div className="w-full h-[200px] flex items-center justify-evenly">
-                <h1 className="text-2xl text-white underline"> Gallery:</h1>
-                <Link to="/yourimg">Your Image</Link>
+                <Link className="text-2xl text-white underline" to="/yourimg">Your Image</Link>
+                <Link className="text-2xl text-white underline" to="/yourvid">Your Video</Link>
                 <div className="w-content ">
                     <input type="file" className=" bg-slate-200 w-[200px]" onChange={(e) => setFileUpload(e.target.files[0])} />
                     <button className="bg-green-200 px-10 rounded border-2 border-green-700 py-2" onClick={uploadFile}>submit Img</button>
@@ -77,7 +77,7 @@ const LandingPage = (props) => {
             </div>
             <div className="w-full flex flex-col">
 
-                <h1 className="text-2xl text-white ml-5">Images:</h1>
+                <h1 className="text-2xl text-white ml-5">Image Gallery:</h1>
                 <div className="w-full flex flex-wrap h-full  ">
                     {imageList.map((url, i) => {
                         return (
@@ -85,7 +85,7 @@ const LandingPage = (props) => {
                         )
                     })}
                 </div>
-                <h1 className="text-2xl text-white ml-5">Videos:</h1>
+                <h1 className="text-2xl text-white ml-5">Video Gallery:</h1>
                 <div className="w-11/12 flex flex-wrap h-full">
                     {videoList.map((url, i) => {
                         return (
