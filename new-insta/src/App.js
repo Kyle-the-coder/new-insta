@@ -8,7 +8,7 @@ import {useState} from 'react'
 function App() {
   const [loggedIn, setLoggedIn] = useState('')
   return (
-    <div className="bg-slate-600 w-full h-[2000px]">
+    <div className="bg-slate-600 w-full ">
       <Routes>
         <Route path="/" element={<Auth loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path="/loggedIn" element={<LandingPage loggedIn={loggedIn}/>}/>
