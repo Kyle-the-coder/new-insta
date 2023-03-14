@@ -1,23 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import { Auth } from './components/Autho';
+import { Routes, Route } from "react-router-dom"
+import LandingPage from './views/LandingPage';
+import {useState} from 'react'
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState('')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-slate-600 w-full h-[2000px]">
+      <Routes>
+        <Route path="/" element={<Auth loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+        <Route path="/loggedIn" element={<LandingPage loggedIn={loggedIn}/>}/>
+      </Routes>
+
     </div>
   );
 }
