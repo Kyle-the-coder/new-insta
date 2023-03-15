@@ -14,7 +14,7 @@ const OneImg = (props) => {
 
     const uploadFile = async () => {
         if (!fileUpload) return;
-   
+        
         const filesFolderRef = ref(storage, `imgs/${fileUpload.name}`);
     
         try {
