@@ -93,7 +93,7 @@ const UserVid = () => {
             <div className="w-full flex flex-col items-center h-screen">
                 <label className="text-2xl text-white m-5 underline">Edit Video:</label>
                 <input type="file" className="m-8" onChange={(e) => setFile(e.target.files[0])} />
-                <button disabled={perc !== null && perc < 100} className="bg-green-200 disabled:opacity-75 disabled:bg-red-200 px-10 rounded border-2 border-green-700 py-2" onClick={editPhoto}>Submit</button>
+                <button disabled={perc !== null && perc < 100} className="bg-green-200 disabled:opacity-75 disabled:bg-red-200 px-10 rounded border-2 border-green-700 py-2" onClick={editPhoto}>{perc !== null && perc < 100 ? "Wait for it..." : "Submit"}</button>
             </div>
         </div>
     )
