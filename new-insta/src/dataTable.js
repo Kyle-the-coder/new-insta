@@ -15,5 +15,6 @@ export const userInputs = [
         id: "password",
         label: "Password",
         type: "password",
-    }
+    },
+
 ];
