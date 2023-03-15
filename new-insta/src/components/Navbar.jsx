@@ -1,18 +1,20 @@
 import { auth } from "../config/firebase"
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from 'firebase/auth'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext"
 
 
 
 const InstaNav = (props) => {
     const { loggedIn } = props
     const navigate = useNavigate()
-
+    const {dispatch} = useContext(AuthContext)
     const logout = async () => {
         try {
             await signOut(auth)
-            navigate('/')
+            dispatch({type: 'LOGOUT'})
+            navigate('login')
         } catch (error) {
             console.log(error)
         }

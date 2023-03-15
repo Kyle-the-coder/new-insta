@@ -14,22 +14,22 @@ const LandingPage = (props) => {
     const imageListRef = ref(storage, "imgs/")
     const videoListRef = ref(storage, "vids/")
     useEffect(() => {
-        listAll(imageListRef)
-            .then((res) => {
-                res.items.forEach((item) => {
-                    getDownloadURL(item).then((url) => {
-                        setImageList((prev) => [...prev, url])
-                    })
-                })
-            })
-        listAll(videoListRef)
-            .then((res) => {
-                res.items.forEach((item) => {
-                    getDownloadURL(item).then((url) => {
-                        setVideoList((prev) => [...prev, url])
-                    })
-                })
-            })
+        // listAll(imageListRef)
+        //     .then((res) => {
+        //         res.items.forEach((item) => {
+        //             getDownloadURL(item).then((url) => {
+        //                 setImageList((prev) => [...prev, url])
+        //             })
+        //         })
+        //     })
+        // listAll(videoListRef)
+        //     .then((res) => {
+        //         res.items.forEach((item) => {
+        //             getDownloadURL(item).then((url) => {
+        //                 setVideoList((prev) => [...prev, url])
+        //             })
+        //         })
+        //     })
     }, [])
     const uploadFile = async () => {
         if (!fileUpload) return;

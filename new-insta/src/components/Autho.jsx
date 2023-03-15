@@ -1,99 +1,50 @@
 
-
+import { useContext, useState } from "react"
+import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../config/firebase"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { doc, setDoc, serverTimestamp, addDoc, collection, onSnapShot } from "firebase/firestore";
-import { db, getAuth, storage } from "../config/firebase";
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext"
 
-export const Auth = (props) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errTracker, setErrTracker] = useState(false)
-    const [signTracker, setSignTracker] = useState(false)
-    const [errMsg, setErrMsg] = useState('')
-    const { loggedIn, setLoggedIn } = props
-    const { userInputs } = props
-    const [data, setData] = useState({});
+const Autho = () => {
+    const [error, setError] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const navigate = useNavigate()
-    console.log(auth?.currentUser?.email)
+
+    const { dispatch } = useContext(AuthContext)
 
 
-    const register = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user
-                console.log(user)
-                setLoggedIn(user)
-                navigate("/loggedIn")
-            })
-            .catch((error) => {
-                console.log(error)
-                setErrTracker(true)
-
-            })
-    }
-
-    const signIn = () => {
+    const handleLogin = (e) => {
+        e.preventDefault()
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user)
-                setLoggedIn(user)
-                navigate('/loggedIn')
+                dispatch({ type: "LOGIN", payload: user })
+                navigate("/")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                setSignTracker(true)
+                console.log(error)
+                setError(true)
             });
     }
-
-    const handleInput = (e) => {
-        const id = e.target.id
-        const value = e.target.value
-        setData({ ...data, [id]: value })
-    }
-
-    const handleAdd = async (e) => {
-        e.preventDefault()
-        try {
-            const res = await createUserWithEmailAndPassword(auth, data.email, data.password)
-            await setDoc(doc(db, "users", res.user.uid), {
-                ...data,
-                timeStamp: serverTimestamp()
-            });
-            navigate(-1)
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-
-
 
     return (
-        <div className="w-full h-screen items-center flex justify-center">
-            <div className="bg-green-900 rounded border-2 border-green-200 flex flex-col w-[400px] h-[500px]  items-center">
-                <h1 className="text-2xl text-white mb-10 mt-8">Welcome to NeW-INsTA</h1>
-                <div className="w-[370px] flex flex-col mb-5">
-                    {userInputs.map((input) => (
-                        <div key={input.id}>
-                            <label className="text-lg text-white mb-3 underline ">{input.label}</label>
-                            <input className="border-2 border-green-200 w-[350px] mb-2" type={input.type} placeholder={input.placeholder} id={input.id} onChange={handleInput} />
-                        </div>
-                    ))}
-                </div>
-                <div className="w-full flex justify-evenly mb-5">
-                    <button className="bg-green-200 px-10 py-2 rounded border-2 border-green-700" onClick={handleAdd}>Sign In</button>
-                </div>
-                {errTracker && <p className="text-red-400">Email is already in use</p>}
-                {signTracker && <p className="text-red-400">Password is incorrect</p>}
-            </div>
+        <div className="w-full h-screen flex flex-col items-center justify-center">
+            <div className="w-[400px] h-[400px] justify-start  flex flex-col items-center bg-green-800 border-2 rounded border-green-200">
+                <h1 className="m-5 text-2xl text-white">Welcome to New-Insta</h1>
+                <form onSubmit={handleLogin} className="flex flex-col w-5/6 m-5 items-center">
+                    <input className="p-1 mb-5 w-5/6"  type="text" placeholder="email..." onChange={(e) => setEmail(e.target.value)} />
+                    <input className="p-1 mb-5 w-5/6"  type="password" placeholder="password..." onChange={(e) => setPassword(e.target.value)} />
+                    <button className="bg-green-200 px-10 rounded border-2 border-green-700 py-2"  type="submit">Login</button>
+                    {error && <span className="text-red-400 m-5">wrong email or password</span>}
 
+                </form>
+            </div>
         </div>
     )
 }
+
+export default Autho;
